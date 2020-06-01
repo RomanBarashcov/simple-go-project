@@ -40,23 +40,8 @@ func GetBookByCategory(c *gin.Context) {
 
 func CreateBook(c *gin.Context) {
 
-	id, err := strconv.ParseInt(c.PostForm("CategoryID"), 10, 64)
-	if err != nil {
-		c.JSON(500, "Payload is incorrect!")
-	}
-
-	price, err := strconv.ParseInt(c.PostForm("Price"), 10, 32)
-	if err != nil {
-		c.JSON(500, "Payload is incorrect!")
-	}
-
-	newBook := new(entities.Book)
-
-	newBook.Title = c.PostForm("Title")
-	newBook.Description = c.PostForm("Description")
-	newBook.Cover = c.PostForm("Cover")
-	newBook.Price = int32(price)
-	newBook.CategoryID = id
+	newBook := &entities.Book{}
+	c.Bind(newBook)
 
 	book := services.CreateBook(newBook)
 

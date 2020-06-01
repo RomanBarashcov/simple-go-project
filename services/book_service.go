@@ -20,7 +20,7 @@ func GetBooksByCategoryId(id int64) []entities.Book {
 	return books
 }
 
-func CreateBook(newBook *entities.Book) entities.Book {
+func CreateBook(newBook *entities.Book) *entities.Book {
 	book := repositories.CreateBook(newBook)
 	return book
 }

@@ -62,22 +62,25 @@ func FindBooksByCategoryId(id int64) []entities.Book {
 
 }
 
-func CreateBook(newBook *entities.Book) entities.Book {
+func CreateBook(newBook *entities.Book) *entities.Book {
 
 	db := config.GetConnection()
 	defer db.Close()
 
-	book := models.Book{Title: newBook.Title, Description: newBook.Description, Cover: newBook.Cover, Price: newBook.Price, CategoryID: newBook.CategoryID}
+	book := models.Book{
+		Title:       newBook.Title,
+		Description: newBook.Description,
+		Author:      newBook.Author,
+		Cover:       newBook.Cover,
+		Price:       newBook.Price,
+		CategoryID:  newBook.CategoryID,
+	}
 
 	newRecordResult := db.NewRecord(book)
 	if !newRecordResult {
-		panic("Create book error")
+		panic("new Record book error")
 	}
 
-	result := db.Create(&book)
-	if result == nil {
-
-	}
-
-	return *newBook
+	db.Create(&book).Scan(&newBook)
+	return newBook
 }
