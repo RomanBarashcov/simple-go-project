@@ -35,6 +35,7 @@ func FindBookById(id int64) *entities.Book {
 
 	book := new(entities.Book)
 	db.Table("books as b").Select("b.*, c.name as category_name").Where("b.ID = ?", id).Joins("left join categories as c on c.ID = b.category_id").Scan(&book)
+	db.Table("reviews as r").Select("r.*").Where("r.book_id = ?", id).Scan(&book.Reviews)
 
 	return book
 
@@ -83,4 +84,45 @@ func CreateBook(newBook *entities.Book) *entities.Book {
 
 	db.Create(&book).Scan(&newBook)
 	return newBook
+}
+
+func UpdateBook(upBook *entities.Book) *entities.Book {
+
+	db := config.GetConnection()
+	defer db.Close()
+
+	book := models.Book{ID: upBook.ID}
+	db.First(&book)
+
+	book.Title = upBook.Title
+	book.Description = upBook.Description
+	book.Author = upBook.Author
+	book.Cover = upBook.Cover
+	book.Price = upBook.Price
+	book.CategoryID = upBook.CategoryID
+
+	upResult := db.Save(&book).Value
+	if upResult == nil {
+		panic("Error when update book")
+	}
+
+	return upBook
+
+}
+
+func DeleteBook(id int64) bool {
+
+	var success bool = false
+
+	db := config.GetConnection()
+	defer db.Close()
+
+	book := models.Book{ID: id}
+	result := db.Delete(&book).Value
+	if result == nil {
+		panic("Error when delete book")
+	}
+
+	success = true
+	return success
 }

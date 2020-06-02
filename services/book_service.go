@@ -24,3 +24,13 @@ func CreateBook(newBook *entities.Book) *entities.Book {
 	book := repositories.CreateBook(newBook)
 	return book
 }
+
+func UpdateBook(upBook *entities.Book) *entities.Book {
+	book := repositories.UpdateBook(upBook)
+	return book
+}
+
+func DeleteBook(id int64) bool {
+	success := repositories.DeleteBook(id)
+	return success
+}

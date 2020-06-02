@@ -1,7 +1,7 @@
 package entities
 
 type Book struct {
-	ID           int
+	ID           int64
 	Title        string
 	Description  string
 	Author       string
@@ -9,4 +9,5 @@ type Book struct {
 	Price        int32
 	CategoryName string
 	CategoryID   int64
+	Reviews      []Review
 }
