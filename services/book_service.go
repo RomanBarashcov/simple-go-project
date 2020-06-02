@@ -2,35 +2,45 @@ package services
 
 import (
 	"code/entities"
-	"code/repositories"
 )
 
-func GetAllBooks() []entities.Book {
-	books := repositories.FindAllBooks()
+type IBookService interface {
+	GetAllBooks() []entities.Book
+	GetBookById(id int64) *entities.Book
+	GetBooksByCategoryId(id int64) []entities.Book
+	CreateBook(newBook *entities.Book) *entities.Book
+	UpdateBook(upBook *entities.Book) *entities.Book
+	DeleteBook(id int64) bool
+}
+
+type BookService struct{}
+
+func (b BookService) GetAllBooks() []entities.Book {
+	books := bookRepository.FindAllBooks()
 	return books
 }
 
-func GetBookById(id int64) *entities.Book {
-	book := repositories.FindBookById(id)
+func (b BookService) GetBookById(id int64) *entities.Book {
+	book := bookRepository.FindBookById(id)
 	return book
 }
 
-func GetBooksByCategoryId(id int64) []entities.Book {
-	books := repositories.FindBooksByCategoryId(id)
+func (b BookService) GetBooksByCategoryId(id int64) []entities.Book {
+	books := bookRepository.FindBooksByCategoryId(id)
 	return books
 }
 
-func CreateBook(newBook *entities.Book) *entities.Book {
-	book := repositories.CreateBook(newBook)
+func (b BookService) CreateBook(newBook *entities.Book) *entities.Book {
+	book := bookRepository.CreateBook(newBook)
 	return book
 }
 
-func UpdateBook(upBook *entities.Book) *entities.Book {
-	book := repositories.UpdateBook(upBook)
+func (b BookService) UpdateBook(upBook *entities.Book) *entities.Book {
+	book := bookRepository.UpdateBook(upBook)
 	return book
 }
 
-func DeleteBook(id int64) bool {
-	success := repositories.DeleteBook(id)
+func (b BookService) DeleteBook(id int64) bool {
+	success := bookRepository.DeleteBook(id)
 	return success
 }

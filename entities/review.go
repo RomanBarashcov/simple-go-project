@@ -1,8 +1,11 @@
 package entities
 
 type Review struct {
-	ID     int
-	Text   string
-	Rating int8
-	User   User
+	ID        int64
+	BookID    int64
+	Rating    int8
+	Text      string
+	UserID    int64
+	UserName  string
+	UserEmail string
 }

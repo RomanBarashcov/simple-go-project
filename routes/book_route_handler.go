@@ -2,7 +2,6 @@ package routes
 
 import (
 	"code/entities"
-	"code/services"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -10,7 +9,7 @@ import (
 
 func GetBooks(c *gin.Context) {
 
-	books := services.GetAllBooks()
+	books := bookService.GetAllBooks()
 	c.JSON(200, books)
 
 }
@@ -22,7 +21,7 @@ func GetBook(c *gin.Context) {
 		c.JSON(500, "Payload is incorrect!")
 	}
 
-	book := services.GetBookById(id)
+	book := bookService.GetBookById(id)
 	c.JSON(200, book)
 }
 
@@ -33,7 +32,7 @@ func GetBookByCategory(c *gin.Context) {
 		c.JSON(500, "Payload is incorrect!")
 	}
 
-	book := services.GetBooksByCategoryId(id)
+	book := bookService.GetBooksByCategoryId(id)
 	c.JSON(200, book)
 
 }
@@ -43,7 +42,7 @@ func CreateBook(c *gin.Context) {
 	newBook := &entities.Book{}
 	c.Bind(newBook)
 
-	book := services.CreateBook(newBook)
+	book := bookService.CreateBook(newBook)
 
 	c.JSON(200, book)
 
@@ -54,7 +53,7 @@ func UpdateBook(c *gin.Context) {
 	upBook := &entities.Book{}
 	c.Bind(upBook)
 
-	book := services.UpdateBook(upBook)
+	book := bookService.UpdateBook(upBook)
 
 	c.JSON(200, book)
 
@@ -67,7 +66,7 @@ func DeleteBook(c *gin.Context) {
 		c.JSON(500, "Payload is incorrect!")
 	}
 
-	success := services.DeleteBook(id)
+	success := bookService.DeleteBook(id)
 
 	c.PureJSON(200, gin.H{
 		"deleted": success,

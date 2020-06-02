@@ -10,6 +10,7 @@ func SetupSeed(db *gorm.DB) {
 
 	SetupCategories(db)
 	SetupBooks(db)
+	SetupUsers(db)
 	SetupReviews(db)
 
 }
@@ -37,6 +38,18 @@ func SetupBooks(db *gorm.DB) {
 
 }
 
+func SetupUsers(db *gorm.DB) {
+
+	user1 := models.User{}
+	user2 := models.User{}
+	user3 := models.User{}
+
+	db.Where(models.User{Name: "User1", Email: "user1@gmail.com"}).FirstOrCreate(&user1)
+	db.Where(models.User{Name: "User2", Email: "user2@gmail.com"}).FirstOrCreate(&user2)
+	db.Where(models.User{Name: "User3", Email: "user3@gmail.com"}).FirstOrCreate(&user3)
+
+}
+
 func SetupReviews(db *gorm.DB) {
 
 	review1 := models.Review{}
@@ -44,9 +57,9 @@ func SetupReviews(db *gorm.DB) {
 	review3 := models.Review{}
 	review4 := models.Review{}
 
-	db.Where(models.Review{BookID: 1, Rating: 5, Text: "Best book I have ever read1", UserName: "User1"}).FirstOrCreate(&review1)
-	db.Where(models.Review{BookID: 2, Rating: 4, Text: "Best book I have ever read2", UserName: "User2"}).FirstOrCreate(&review2)
-	db.Where(models.Review{BookID: 2, Rating: 3, Text: "Best book I have ever read3", UserName: "User3"}).FirstOrCreate(&review3)
-	db.Where(models.Review{BookID: 2, Rating: 1, Text: "Best book I have ever read4", UserName: "User4"}).FirstOrCreate(&review4)
+	db.Where(models.Review{BookID: 1, Rating: 5, Text: "Best book I have ever read1", UserID: 1}).FirstOrCreate(&review1)
+	db.Where(models.Review{BookID: 2, Rating: 4, Text: "Best book I have ever read2", UserID: 1}).FirstOrCreate(&review2)
+	db.Where(models.Review{BookID: 2, Rating: 3, Text: "Best book I have ever read3", UserID: 2}).FirstOrCreate(&review3)
+	db.Where(models.Review{BookID: 2, Rating: 1, Text: "Best book I have ever read4", UserID: 2}).FirstOrCreate(&review4)
 
 }

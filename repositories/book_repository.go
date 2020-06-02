@@ -6,7 +6,18 @@ import (
 	"code/entities"
 )
 
-func FindAllBooks() []entities.Book {
+type IBookRepository interface {
+	FindAllBooks() []entities.Book
+	FindBookById(id int64) *entities.Book
+	FindBooksByCategoryId(id int64) []entities.Book
+	CreateBook(newBook *entities.Book) *entities.Book
+	UpdateBook(upBook *entities.Book) *entities.Book
+	DeleteBook(id int64) bool
+}
+
+type BookRepository struct{}
+
+func (b BookRepository) FindAllBooks() []entities.Book {
 
 	db := config.GetConnection()
 	defer db.Close()
@@ -28,20 +39,20 @@ func FindAllBooks() []entities.Book {
 
 }
 
-func FindBookById(id int64) *entities.Book {
+func (b BookRepository) FindBookById(id int64) *entities.Book {
 
 	db := config.GetConnection()
 	defer db.Close()
 
 	book := new(entities.Book)
 	db.Table("books as b").Select("b.*, c.name as category_name").Where("b.ID = ?", id).Joins("left join categories as c on c.ID = b.category_id").Scan(&book)
-	db.Table("reviews as r").Select("r.*").Where("r.book_id = ?", id).Scan(&book.Reviews)
+	db.Table("reviews as r").Select("r.*, u.name as user_name, u.email as user_email").Where("r.book_id = ?", id).Joins("left join users as u on u.id = r.user_id").Scan(&book.Reviews)
 
 	return book
 
 }
 
-func FindBooksByCategoryId(id int64) []entities.Book {
+func (b BookRepository) FindBooksByCategoryId(id int64) []entities.Book {
 
 	db := config.GetConnection()
 	defer db.Close()
@@ -63,7 +74,7 @@ func FindBooksByCategoryId(id int64) []entities.Book {
 
 }
 
-func CreateBook(newBook *entities.Book) *entities.Book {
+func (b BookRepository) CreateBook(newBook *entities.Book) *entities.Book {
 
 	db := config.GetConnection()
 	defer db.Close()
@@ -86,7 +97,7 @@ func CreateBook(newBook *entities.Book) *entities.Book {
 	return newBook
 }
 
-func UpdateBook(upBook *entities.Book) *entities.Book {
+func (b BookRepository) UpdateBook(upBook *entities.Book) *entities.Book {
 
 	db := config.GetConnection()
 	defer db.Close()
@@ -110,7 +121,7 @@ func UpdateBook(upBook *entities.Book) *entities.Book {
 
 }
 
-func DeleteBook(id int64) bool {
+func (b BookRepository) DeleteBook(id int64) bool {
 
 	var success bool = false
 
