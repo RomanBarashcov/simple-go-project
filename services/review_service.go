@@ -12,7 +12,7 @@ type IReviewService interface {
 
 type ReviewService struct{}
 
-func (r ReviewService) CreateReview(newReview *entities.Review) *entities.Review {
+func (r *ReviewService) CreateReview(newReview *entities.Review) *entities.Review {
 
 	book := bookRepository.FindBookById(newReview.BookID)
 	if book == nil {
@@ -36,7 +36,7 @@ func (r ReviewService) CreateReview(newReview *entities.Review) *entities.Review
 
 }
 
-func (r ReviewService) UpdateReview(upReview *entities.Review) *entities.Review {
+func (r *ReviewService) UpdateReview(upReview *entities.Review) *entities.Review {
 
 	book := bookRepository.FindBookById(upReview.BookID)
 	if book == nil {
@@ -60,7 +60,7 @@ func (r ReviewService) UpdateReview(upReview *entities.Review) *entities.Review 
 
 }
 
-func (r ReviewService) DeleteReview(id int64) bool {
+func (r *ReviewService) DeleteReview(id int64) bool {
 
 	success := reviewRepository.DeleteReview(id)
 	return success

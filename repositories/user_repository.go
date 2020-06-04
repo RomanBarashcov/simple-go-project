@@ -11,7 +11,7 @@ type IUserRepository interface {
 
 type UserRepository struct{}
 
-func (u UserRepository) FindUserById(id int64) *entities.User {
+func (u *UserRepository) FindUserById(id int64) *entities.User {
 
 	db := config.GetConnection()
 	defer db.Close()

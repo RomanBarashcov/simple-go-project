@@ -25,13 +25,13 @@ func SetupRoutes() {
 
 	route := gin.Default()
 
-	SetupRoutesForBooksURLS(route)
-	SetupRoutesForReviewURLS(route)
+	SetupRoutesForBooks(route)
+	SetupRoutesForReviews(route)
 
 	route.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
 
-func SetupRoutesForBooksURLS(route *gin.Engine) {
+func SetupRoutesForBooks(route *gin.Engine) {
 
 	route.GET("/api/books", routes.GetBooks)
 	route.GET("/api/books/find/by/book/:id", routes.GetBook)
@@ -42,7 +42,7 @@ func SetupRoutesForBooksURLS(route *gin.Engine) {
 
 }
 
-func SetupRoutesForReviewURLS(route *gin.Engine) {
+func SetupRoutesForReviews(route *gin.Engine) {
 
 	route.POST("/api/reviews/create", routes.CreateReview)
 	route.PUT("/api/reviews/update", routes.UpdateReview)

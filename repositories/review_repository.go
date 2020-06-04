@@ -14,7 +14,7 @@ type IReviewRepository interface {
 
 type ReviewRepository struct{}
 
-func (r ReviewRepository) CreateReview(newReview *entities.Review) *entities.Review {
+func (r *ReviewRepository) CreateReview(newReview *entities.Review) *entities.Review {
 
 	db := config.GetConnection()
 	defer db.Close()
@@ -36,7 +36,7 @@ func (r ReviewRepository) CreateReview(newReview *entities.Review) *entities.Rev
 
 }
 
-func (r ReviewRepository) UpdateReview(upReview *entities.Review) *entities.Review {
+func (r *ReviewRepository) UpdateReview(upReview *entities.Review) *entities.Review {
 
 	db := config.GetConnection()
 	defer db.Close()
@@ -58,7 +58,7 @@ func (r ReviewRepository) UpdateReview(upReview *entities.Review) *entities.Revi
 
 }
 
-func (r ReviewRepository) DeleteReview(id int64) bool {
+func (r *ReviewRepository) DeleteReview(id int64) bool {
 
 	var success bool = false
 

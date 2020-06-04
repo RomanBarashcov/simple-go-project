@@ -17,10 +17,9 @@ type IBookRepository interface {
 
 type BookRepository struct{}
 
-func (b BookRepository) FindAllBooks() []entities.Book {
+func (b *BookRepository) FindAllBooks() []entities.Book {
 
 	db := config.GetConnection()
-	defer db.Close()
 
 	rows, err := db.Table("books as b").Select("b.*, c.name as category_name").Joins("left join categories as c on c.ID = b.category_id").Rows()
 	if err != nil {
@@ -39,10 +38,9 @@ func (b BookRepository) FindAllBooks() []entities.Book {
 
 }
 
-func (b BookRepository) FindBookById(id int64) *entities.Book {
+func (b *BookRepository) FindBookById(id int64) *entities.Book {
 
 	db := config.GetConnection()
-	defer db.Close()
 
 	book := new(entities.Book)
 	db.Table("books as b").Select("b.*, c.name as category_name").Where("b.ID = ?", id).Joins("left join categories as c on c.ID = b.category_id").Scan(&book)
@@ -52,10 +50,9 @@ func (b BookRepository) FindBookById(id int64) *entities.Book {
 
 }
 
-func (b BookRepository) FindBooksByCategoryId(id int64) []entities.Book {
+func (b *BookRepository) FindBooksByCategoryId(id int64) []entities.Book {
 
 	db := config.GetConnection()
-	defer db.Close()
 
 	rows, err := db.Table("books as b").Select("b.*, c.name as category_name").Where("b.category_id = ?", id).Joins("left join categories as c on c.ID = b.category_id").Rows()
 	if err != nil {
@@ -74,10 +71,9 @@ func (b BookRepository) FindBooksByCategoryId(id int64) []entities.Book {
 
 }
 
-func (b BookRepository) CreateBook(newBook *entities.Book) *entities.Book {
+func (b *BookRepository) CreateBook(newBook *entities.Book) *entities.Book {
 
 	db := config.GetConnection()
-	defer db.Close()
 
 	book := models.Book{
 		Title:       newBook.Title,
@@ -97,10 +93,9 @@ func (b BookRepository) CreateBook(newBook *entities.Book) *entities.Book {
 	return newBook
 }
 
-func (b BookRepository) UpdateBook(upBook *entities.Book) *entities.Book {
+func (b *BookRepository) UpdateBook(upBook *entities.Book) *entities.Book {
 
 	db := config.GetConnection()
-	defer db.Close()
 
 	book := models.Book{ID: upBook.ID}
 	db.First(&book)
@@ -121,12 +116,11 @@ func (b BookRepository) UpdateBook(upBook *entities.Book) *entities.Book {
 
 }
 
-func (b BookRepository) DeleteBook(id int64) bool {
+func (b *BookRepository) DeleteBook(id int64) bool {
 
 	var success bool = false
 
 	db := config.GetConnection()
-	defer db.Close()
 
 	book := models.Book{ID: id}
 	result := db.Delete(&book).Value
