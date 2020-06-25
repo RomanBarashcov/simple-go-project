@@ -96,7 +96,10 @@ func (m *MockBookRepository) FindBooksByCategoryId(id int64) []entities.Book {
 
 func (m *MockBookRepository) CreateBook(newBook *entities.Book) *entities.Book {
 
-	return nil
+	newBook.ID = int64(len(mockBooks)) + 1
+	mockBooks = append(mockBooks, *newBook)
+	return newBook
+
 }
 
 func (m *MockBookRepository) UpdateBook(upBook *entities.Book) *entities.Book {
