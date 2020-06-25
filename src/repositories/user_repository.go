@@ -1,8 +1,8 @@
 package repositories
 
 import (
-	"code/database/config"
-	"code/entities"
+	"simple-go-project/src/database/config"
+	"simple-go-project/src/entities"
 )
 
 type IUserRepository interface {

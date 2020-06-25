@@ -1,6 +1,6 @@
 package routes
 
-import "code/services"
+import "simple-go-project/src/services"
 
 var bookService services.IBookService
 var reviewService services.IReviewService

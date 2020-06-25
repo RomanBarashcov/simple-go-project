@@ -1,13 +1,15 @@
 package main
 
 import (
-	"code/repositories"
-	"code/routes"
-	"code/services"
+	"simple-go-project/src/repositories"
+	"simple-go-project/src/routes"
+	"simple-go-project/src/services"
 )
 
 func MakeInjection() {
+
 	InjectRepositories()
+
 }
 
 func InjectRepositories() {

@@ -1,7 +1,7 @@
 package services
 
 import (
-	"code/entities"
+	"simple-go-project/src/entities"
 )
 
 type IBookService interface {

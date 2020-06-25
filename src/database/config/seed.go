@@ -1,7 +1,7 @@
 package config
 
 import (
-	"code/database/models"
+	"simple-go-project/src/database/models"
 
 	"github.com/jinzhu/gorm"
 )

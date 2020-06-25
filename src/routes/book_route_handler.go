@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"code/entities"
+	"simple-go-project/src/entities"
 	"strconv"
 
 	"github.com/gin-gonic/gin"

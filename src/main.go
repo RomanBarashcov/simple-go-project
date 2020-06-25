@@ -1,8 +1,8 @@
 package main
 
 import (
-	"code/database/config"
-	"code/routes"
+	"simple-go-project/src/database/config"
+	"simple-go-project/src/routes"
 
 	"github.com/gin-gonic/gin"
 )
@@ -25,13 +25,13 @@ func SetupRoutes() {
 
 	route := gin.Default()
 
-	SetupRoutesForBooks(route)
-	SetupRoutesForReviews(route)
+	SetupBookRoutes(route)
+	SetupReviewRoutes(route)
 
 	route.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
 
-func SetupRoutesForBooks(route *gin.Engine) {
+func SetupBookRoutes(route *gin.Engine) {
 
 	route.GET("/api/books", routes.GetBooks)
 	route.GET("/api/books/find/by/book/:id", routes.GetBook)
@@ -42,7 +42,7 @@ func SetupRoutesForBooks(route *gin.Engine) {
 
 }
 
-func SetupRoutesForReviews(route *gin.Engine) {
+func SetupReviewRoutes(route *gin.Engine) {
 
 	route.POST("/api/reviews/create", routes.CreateReview)
 	route.PUT("/api/reviews/update", routes.UpdateReview)

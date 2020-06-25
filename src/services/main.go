@@ -1,6 +1,6 @@
 package services
 
-import "code/repositories"
+import "simple-go-project/src/repositories"
 
 var bookRepository repositories.IBookRepository
 var reviewRepository repositories.IReviewRepository

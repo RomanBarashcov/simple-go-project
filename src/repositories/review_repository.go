@@ -1,9 +1,9 @@
 package repositories
 
 import (
-	"code/database/config"
-	"code/database/models"
-	"code/entities"
+	"simple-go-project/src/database/config"
+	"simple-go-project/src/database/models"
+	"simple-go-project/src/entities"
 )
 
 type IReviewRepository interface {
