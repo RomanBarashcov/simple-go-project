@@ -9,7 +9,7 @@ import (
 
 func TestFindAllBooks(t *testing.T) {
 
-	repository := &MockBookRepository{}
+	repository := &mockBookRepository{}
 	actual := repository.FindAllBooks()
 	expected := mockBooks
 
@@ -19,7 +19,7 @@ func TestFindAllBooks(t *testing.T) {
 
 func TestFindBookById(t *testing.T) {
 
-	repository := &MockBookRepository{}
+	repository := &mockBookRepository{}
 	var bookId int64 = 1
 
 	actual := repository.FindBookById(bookId)
@@ -31,7 +31,7 @@ func TestFindBookById(t *testing.T) {
 
 func TestFindBooksByCategoryId(t *testing.T) {
 
-	repository := &MockBookRepository{}
+	repository := &mockBookRepository{}
 	var categoryId int64 = 1
 
 	actual := repository.FindBooksByCategoryId(categoryId)
@@ -43,7 +43,7 @@ func TestFindBooksByCategoryId(t *testing.T) {
 
 func TestCreateBook(t *testing.T) {
 
-	repository := &MockBookRepository{}
+	repository := &mockBookRepository{}
 	book := new(entities.Book)
 
 	book.Title = "Title4"
@@ -60,4 +60,38 @@ func TestCreateBook(t *testing.T) {
 
 	assert.Equal(t, expected.ID, actual.ID)
 	assert.Equal(t, mockBooks[3].ID, actual.ID)
+}
+
+func TestUpdateBook(t *testing.T) {
+
+	repository := &mockBookRepository{}
+	upBook := mockBooks[1]
+
+	upBook.Title = "Title5"
+	upBook.Description = "Description5"
+	upBook.Author = "Author5"
+	upBook.Cover = "Cover5"
+	upBook.Price = 500
+	upBook.CategoryName = "CategoryName5"
+	upBook.CategoryID = 5
+
+	_ = repository.UpdateBook(&upBook)
+	expected := upBook
+
+	assert.Equal(t, expected.ID, mockBooks[1].ID)
+	assert.Equal(t, expected.Title, mockBooks[1].Title)
+
+}
+
+func TestDeleteBook(t *testing.T) {
+
+	repository := &mockBookRepository{}
+	delBook := mockBooks[1]
+
+	actual := repository.DeleteBook(delBook.ID)
+	expected := true
+
+	assert.Equal(t, actual, expected)
+	assert.NotEqual(t, delBook.ID, mockBooks[1].ID)
+
 }

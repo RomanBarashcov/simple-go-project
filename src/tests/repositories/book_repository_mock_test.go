@@ -2,10 +2,14 @@ package repositories_test
 
 import (
 	"simple-go-project/src/entities"
+	"simple-go-project/src/repositories"
 )
 
-type MockBookRepository struct {
-}
+type mockBookRepository struct{}
+
+var (
+	MockBookRepository repositories.IBookRepository = &mockBookRepository{}
+)
 
 var mockBooks = []entities.Book{
 
@@ -44,41 +48,29 @@ var mockBooks = []entities.Book{
 	},
 }
 
-func (m *MockBookRepository) FindAllBooks() []entities.Book {
+func (m *mockBookRepository) FindAllBooks() []entities.Book {
 
 	books := mockBooks
 	return books
 
 }
 
-func (m *MockBookRepository) FindBookById(id int64) *entities.Book {
+func (m *mockBookRepository) FindBookById(id int64) *entities.Book {
 
-	book := new(entities.Book)
-
-	for _, v := range mockBooks {
+	for i, v := range mockBooks {
 
 		if v.ID == id {
 
-			book.ID = v.ID
-			book.Title = v.Title
-			book.Description = v.Description
-			book.Author = v.Author
-			book.Cover = v.Cover
-			book.Price = v.Price
-			book.CategoryName = v.CategoryName
-			book.CategoryID = v.CategoryID
-			book.Reviews = v.Reviews
-
-			break
+			return &mockBooks[i]
 
 		}
 
 	}
 
-	return book
+	return nil
 }
 
-func (m *MockBookRepository) FindBooksByCategoryId(id int64) []entities.Book {
+func (m *mockBookRepository) FindBooksByCategoryId(id int64) []entities.Book {
 
 	books := make([]entities.Book, 0)
 
@@ -94,7 +86,7 @@ func (m *MockBookRepository) FindBooksByCategoryId(id int64) []entities.Book {
 	return books
 }
 
-func (m *MockBookRepository) CreateBook(newBook *entities.Book) *entities.Book {
+func (m *mockBookRepository) CreateBook(newBook *entities.Book) *entities.Book {
 
 	newBook.ID = int64(len(mockBooks)) + 1
 	mockBooks = append(mockBooks, *newBook)
@@ -102,10 +94,40 @@ func (m *MockBookRepository) CreateBook(newBook *entities.Book) *entities.Book {
 
 }
 
-func (m *MockBookRepository) UpdateBook(upBook *entities.Book) *entities.Book {
-	return nil
+func (m *mockBookRepository) UpdateBook(upBook *entities.Book) *entities.Book {
+
+	for i, v := range mockBooks {
+
+		if v.ID == upBook.ID {
+
+			mockBooks[i].Title = upBook.Title
+			mockBooks[i].Description = upBook.Description
+			mockBooks[i].Author = upBook.Author
+			mockBooks[i].Cover = upBook.Cover
+			mockBooks[i].Price = upBook.Price
+			mockBooks[i].CategoryName = upBook.CategoryName
+			mockBooks[i].CategoryID = upBook.CategoryID
+			mockBooks[i].Reviews = upBook.Reviews
+
+		}
+
+	}
+
+	return upBook
+
 }
 
-func (m *MockBookRepository) DeleteBook(id int64) bool {
-	return true
+func (m *mockBookRepository) DeleteBook(id int64) bool {
+
+	for i, v := range mockBooks {
+
+		if v.ID == id {
+
+			mockBooks = append(mockBooks[:i], mockBooks[i+1:]...) // delete element by index
+			return true
+		}
+
+	}
+
+	return false
 }
