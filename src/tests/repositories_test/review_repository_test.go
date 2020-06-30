@@ -2,14 +2,21 @@ package repositories_test
 
 import (
 	"simple-go-project/src/entities"
+	utils "simple-go-project/src/tests/utils"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
+func StartReviewRepositoryTesting() {
+	utils.WriteConsoleLog("Start ReviewRepository testring")
+}
+
 func TestCreateReview(t *testing.T) {
 
-	repository := &mockReviewRepository{}
+	StartReviewRepositoryTesting()
+
+	repository := &MReviewRepository{}
 	review := new(entities.Review)
 
 	review.BookID = 1
@@ -26,7 +33,7 @@ func TestCreateReview(t *testing.T) {
 
 func TestUpdateReview(t *testing.T) {
 
-	repository := &mockReviewRepository{}
+	repository := &MReviewRepository{}
 	review := mockReviews[1]
 
 	review.BookID = 3
@@ -43,7 +50,7 @@ func TestUpdateReview(t *testing.T) {
 
 func TestDeleteReview(t *testing.T) {
 
-	repository := &mockReviewRepository{}
+	repository := &MReviewRepository{}
 	review := mockReviews[1]
 
 	actual := repository.DeleteReview(review.ID)
@@ -51,4 +58,9 @@ func TestDeleteReview(t *testing.T) {
 
 	assert.Equal(t, expected, actual)
 
+	EndReviewRepositoryTesting()
+}
+
+func EndReviewRepositoryTesting() {
+	utils.WriteConsoleLog("End ReviewRepository testring")
 }

@@ -5,10 +5,10 @@ import (
 	"simple-go-project/src/repositories"
 )
 
-type mockBookRepository struct{}
+type MBookRepository struct{}
 
 var (
-	MockBookRepository repositories.IBookRepository = &mockBookRepository{}
+	MockBookRepository repositories.IBookRepository = &MBookRepository{}
 )
 
 var mockBooks = []entities.Book{
@@ -48,14 +48,14 @@ var mockBooks = []entities.Book{
 	},
 }
 
-func (m *mockBookRepository) FindAllBooks() []entities.Book {
+func (m *MBookRepository) FindAllBooks() []entities.Book {
 
 	books := mockBooks
 	return books
 
 }
 
-func (m *mockBookRepository) FindBookById(id int64) *entities.Book {
+func (m *MBookRepository) FindBookById(id int64) *entities.Book {
 
 	for i, v := range mockBooks {
 
@@ -70,7 +70,7 @@ func (m *mockBookRepository) FindBookById(id int64) *entities.Book {
 	return nil
 }
 
-func (m *mockBookRepository) FindBooksByCategoryId(id int64) []entities.Book {
+func (m *MBookRepository) FindBooksByCategoryId(id int64) []entities.Book {
 
 	books := make([]entities.Book, 0)
 
@@ -86,7 +86,7 @@ func (m *mockBookRepository) FindBooksByCategoryId(id int64) []entities.Book {
 	return books
 }
 
-func (m *mockBookRepository) CreateBook(newBook *entities.Book) *entities.Book {
+func (m *MBookRepository) CreateBook(newBook *entities.Book) *entities.Book {
 
 	newBook.ID = int64(len(mockBooks)) + 1
 	mockBooks = append(mockBooks, *newBook)
@@ -94,7 +94,7 @@ func (m *mockBookRepository) CreateBook(newBook *entities.Book) *entities.Book {
 
 }
 
-func (m *mockBookRepository) UpdateBook(upBook *entities.Book) *entities.Book {
+func (m *MBookRepository) UpdateBook(upBook *entities.Book) *entities.Book {
 
 	for i, v := range mockBooks {
 
@@ -117,7 +117,7 @@ func (m *mockBookRepository) UpdateBook(upBook *entities.Book) *entities.Book {
 
 }
 
-func (m *mockBookRepository) DeleteBook(id int64) bool {
+func (m *MBookRepository) DeleteBook(id int64) bool {
 
 	for i, v := range mockBooks {
 

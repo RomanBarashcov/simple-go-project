@@ -5,10 +5,10 @@ import (
 	"simple-go-project/src/repositories"
 )
 
-type mockUserRepository struct{}
+type MUserRepository struct{}
 
 var (
-	MockUserRepository repositories.IUserRepository = &mockUserRepository{}
+	MockUserRepository repositories.IUserRepository = &MUserRepository{}
 )
 
 var mockUsers = []entities.User{
@@ -29,7 +29,7 @@ var mockUsers = []entities.User{
 	},
 }
 
-func (m *mockUserRepository) FindUserById(id int64) *entities.User {
+func (m *MUserRepository) FindUserById(id int64) *entities.User {
 
 	for i, v := range mockUsers {
 		if v.ID == id {

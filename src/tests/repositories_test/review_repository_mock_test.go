@@ -5,10 +5,10 @@ import (
 	"simple-go-project/src/repositories"
 )
 
-type mockReviewRepository struct{}
+type MReviewRepository struct{}
 
 var (
-	MockReviewRepository repositories.IReviewRepository = &mockReviewRepository{}
+	MockReviewRepository repositories.IReviewRepository = &MReviewRepository{}
 )
 
 var mockReviews = []entities.Review{
@@ -32,7 +32,7 @@ var mockReviews = []entities.Review{
 	},
 }
 
-func (r *mockReviewRepository) CreateReview(newReview *entities.Review) *entities.Review {
+func (r *MReviewRepository) CreateReview(newReview *entities.Review) *entities.Review {
 
 	newReview.ID = int64(len(mockReviews)) + 1
 	mockReviews = append(mockReviews, *newReview)
@@ -40,7 +40,7 @@ func (r *mockReviewRepository) CreateReview(newReview *entities.Review) *entitie
 
 }
 
-func (r *mockReviewRepository) UpdateReview(upReview *entities.Review) *entities.Review {
+func (r *MReviewRepository) UpdateReview(upReview *entities.Review) *entities.Review {
 
 	for i, v := range mockReviews {
 
@@ -57,7 +57,7 @@ func (r *mockReviewRepository) UpdateReview(upReview *entities.Review) *entities
 
 }
 
-func (r *mockReviewRepository) DeleteReview(id int64) bool {
+func (r *MReviewRepository) DeleteReview(id int64) bool {
 
 	for i, v := range mockReviews {
 

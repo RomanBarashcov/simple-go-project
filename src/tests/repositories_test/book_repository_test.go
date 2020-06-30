@@ -2,14 +2,21 @@ package repositories_test
 
 import (
 	"simple-go-project/src/entities"
+	utils "simple-go-project/src/tests/utils"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
+func StartBookRepositoryTesting() {
+	utils.WriteConsoleLog("Start BookRepository testring")
+}
+
 func TestFindAllBooks(t *testing.T) {
 
-	repository := &mockBookRepository{}
+	StartBookRepositoryTesting()
+
+	repository := &MBookRepository{}
 	actual := repository.FindAllBooks()
 	expected := mockBooks
 
@@ -19,7 +26,7 @@ func TestFindAllBooks(t *testing.T) {
 
 func TestFindBookById(t *testing.T) {
 
-	repository := &mockBookRepository{}
+	repository := &MBookRepository{}
 	var bookId int64 = 1
 
 	actual := repository.FindBookById(bookId)
@@ -31,7 +38,7 @@ func TestFindBookById(t *testing.T) {
 
 func TestFindBooksByCategoryId(t *testing.T) {
 
-	repository := &mockBookRepository{}
+	repository := &MBookRepository{}
 	var categoryId int64 = 1
 
 	actual := repository.FindBooksByCategoryId(categoryId)
@@ -43,7 +50,7 @@ func TestFindBooksByCategoryId(t *testing.T) {
 
 func TestCreateBook(t *testing.T) {
 
-	repository := &mockBookRepository{}
+	repository := &MBookRepository{}
 	book := new(entities.Book)
 
 	book.Title = "Title4"
@@ -64,7 +71,7 @@ func TestCreateBook(t *testing.T) {
 
 func TestUpdateBook(t *testing.T) {
 
-	repository := &mockBookRepository{}
+	repository := &MBookRepository{}
 	upBook := mockBooks[1]
 
 	upBook.Title = "Title5"
@@ -85,7 +92,7 @@ func TestUpdateBook(t *testing.T) {
 
 func TestDeleteBook(t *testing.T) {
 
-	repository := &mockBookRepository{}
+	repository := &MBookRepository{}
 	delBook := mockBooks[1]
 
 	actual := repository.DeleteBook(delBook.ID)
@@ -94,4 +101,10 @@ func TestDeleteBook(t *testing.T) {
 	assert.Equal(t, actual, expected)
 	assert.NotEqual(t, delBook.ID, mockBooks[1].ID)
 
+	EndBookRepositoryTesting()
+
+}
+
+func EndBookRepositoryTesting() {
+	utils.WriteConsoleLog("End BookRepository testring")
 }
