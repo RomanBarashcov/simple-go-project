@@ -1,4 +1,4 @@
-package repositories_test
+package tests
 
 import (
 	utils "simple-go-project/src/tests/utils"

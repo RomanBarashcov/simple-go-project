@@ -1,0 +1,1 @@
+1) Set permission for run all tests from sh file: sudo chmod +x run-tests.sh

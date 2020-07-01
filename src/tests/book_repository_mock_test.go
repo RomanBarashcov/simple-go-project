@@ -1,4 +1,4 @@
-package repositories_test
+package tests
 
 import (
 	"simple-go-project/src/entities"
@@ -52,6 +52,21 @@ func (m *MBookRepository) FindAllBooks() []entities.Book {
 
 	books := mockBooks
 	return books
+
+}
+
+func (m *MBookRepository) FindCategoryById(id int64) *entities.Category {
+
+	category := new(entities.Category)
+
+	for _, v := range mockBooks {
+		if v.CategoryID == id {
+			category.ID = v.CategoryID
+			category.Name = v.CategoryName
+		}
+	}
+
+	return nil
 
 }
 

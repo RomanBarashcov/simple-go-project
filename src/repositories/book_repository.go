@@ -8,6 +8,7 @@ import (
 
 type IBookRepository interface {
 	FindAllBooks() []entities.Book
+	FindCategoryById(id int64) *entities.Category
 	FindBookById(id int64) *entities.Book
 	FindBooksByCategoryId(id int64) []entities.Book
 	CreateBook(newBook *entities.Book) *entities.Book
@@ -35,6 +36,17 @@ func (b *BookRepository) FindAllBooks() []entities.Book {
 	}
 
 	return books
+
+}
+
+func (b *BookRepository) FindCategoryById(id int64) *entities.Category {
+
+	db := config.GetConnection()
+
+	category := new(entities.Category)
+	db.Table("categories as c").Select("c.*").Where("c.id = ?", id).Scan(&category)
+
+	return category
 
 }
 
@@ -86,7 +98,7 @@ func (b *BookRepository) CreateBook(newBook *entities.Book) *entities.Book {
 
 	newRecordResult := db.NewRecord(book)
 	if !newRecordResult {
-		panic("new Record book error")
+		panic("error when create new book")
 	}
 
 	db.Create(&book).Scan(&newBook)

@@ -1,4 +1,4 @@
-package repositories_test
+package tests
 
 import (
 	"simple-go-project/src/entities"

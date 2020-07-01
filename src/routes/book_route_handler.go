@@ -21,7 +21,11 @@ func GetBook(c *gin.Context) {
 		c.JSON(500, "Payload is incorrect!")
 	}
 
-	book := bookService.GetBookById(id)
+	book, error := bookService.GetBookById(id)
+	if error != nil {
+		c.JSON(500, error)
+	}
+
 	c.JSON(200, book)
 }
 
@@ -32,8 +36,12 @@ func GetBookByCategory(c *gin.Context) {
 		c.JSON(500, "Payload is incorrect!")
 	}
 
-	book := bookService.GetBooksByCategoryId(id)
-	c.JSON(200, book)
+	books, err := bookService.GetBooksByCategoryId(id)
+	if err != nil {
+		c.JSON(500, err)
+	}
+
+	c.JSON(200, books)
 
 }
 
@@ -42,7 +50,10 @@ func CreateBook(c *gin.Context) {
 	newBook := &entities.Book{}
 	c.Bind(newBook)
 
-	book := bookService.CreateBook(newBook)
+	book, err := bookService.CreateBook(newBook)
+	if err != nil {
+		c.JSON(500, err)
+	}
 
 	c.JSON(200, book)
 
@@ -53,7 +64,10 @@ func UpdateBook(c *gin.Context) {
 	upBook := &entities.Book{}
 	c.Bind(upBook)
 
-	book := bookService.UpdateBook(upBook)
+	book, err := bookService.UpdateBook(upBook)
+	if err != nil {
+		c.JSON(500, err)
+	}
 
 	c.JSON(200, book)
 
